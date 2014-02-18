@@ -103,7 +103,19 @@
     <!-- Callout -->
     <div class="callout">
         <div class="vert-text">
-            <h1>A Dramatic Text Area</h1>
+            <div style="width:auto">
+                @RenderBody()
+                @if (Request.IsAuthenticated)
+                {
+                    <strong>@Html.Encode(User.Identity.Name)</strong>
+                    @Html.ActionLink("Sign Out", "Log Out", "User")
+                }
+                else
+                {
+                    @Html.ActionLink("Register","Register","User")
+                    @Html.ActionLink("Sign In", "Login", "User")
+                }
+            </div>
         </div>
     </div>
     <!-- /Callout -->
@@ -130,7 +142,7 @@
                 <div class="col-md-4 text-center">
                     <div class="portfolio-item">
                         <a href="#">
-                            <img class="img-portfolio img-responsive" src="~/Content/Image/portfolio-2.jpg"">
+                            <img class="img-portfolio img-responsive" src="~/Content/Image/portfolio-2.jpg">
                         </a>
                         <h4>Is That On Fire?</h4>
                     </div>
@@ -207,7 +219,7 @@
     </footer>
     <!-- /Footer -->
 
-    @RenderBody()
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrapjs")
@@ -251,3 +263,4 @@
 
 </body>
 
+</html>
