@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
+using WebMatrix.WebData;
 
 namespace FinPlanWeb.Controllers
 {
@@ -25,7 +26,7 @@ namespace FinPlanWeb.Controllers
         public ActionResult LogIn()
         {
             return View();
-        }   
+        }
 
         /// <summary>
         /// 
@@ -34,47 +35,58 @@ namespace FinPlanWeb.Controllers
         /// <returns></returns>
         [HttpPost]
         public ActionResult Login(Models.User user)
+        {
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                if (user.isValid(user.Username, user.Password))
                 {
-                    if (user.isValid(user.Username,user.Password))
-                    {
-                        FormsAuthentication.SetAuthCookie(user.Username, user.RememberMe);
-                        return RedirectToAction("Index", "Home");
-                    } 
-                    
-                    else
-                    {
-                        ModelState.AddModelError("","Login data is incorrect!");
-                    }
+                    FormsAuthentication.SetAuthCookie(user.Username, user.RememberMe);
+                    return RedirectToAction("Index", "Home");
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Login data is incorrect!");
+                }
+            }
             return View(user);
-          }
-       
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-         public ActionResult LogOut()
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            WebSecurity.Logout();
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+
+        }
+
+        [HttpPost]
+
+        public ActionResult Register(Models.RegisterModel register)
+        {
+            if (ModelState.IsValid)
             {
-                FormsAuthentication.SignOut();
-                return RedirectToAction("Index", "Home");
+                if (register.Password == register.ConfirmPassword)
+                {
+                    register.ExecuteInsert(register.Username, register.Password, register.EmailAddress);
+                }
             }
-
-         [HttpGet]
-         public ActionResult Register()
-         {
-             return View();
-         }
-
-
-         [HttpPost]
-         public ActionResult Register(Models.RegisterModel register)
-         {
-             
-         }   
-
-
-       }   
-
+            else
+            {
+                ModelState.AddModelError("", "Missing some field(s)");
+            }
+            
+            
+            return View(register);
+        }
+    }
  }
