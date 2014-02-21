@@ -33,7 +33,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">Start Bootstrap</a>
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">Start Bootstrap</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -64,6 +64,48 @@
         </div>
 
     </div>
+    <footer style="padding: 15px !important">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <ul class="list-inline">
+                    <li>
+                        <i class="fa fa-facebook fa-3x"></i>
+                    </li>
+                    <li>
+                        <i class="fa fa-twitter fa-3x"></i>
+                    </li>
+                    <li>
+                        <i class="fa fa-dribbble fa-3x"></i>
+                    </li>
+                </ul>
+                <!-- <div class="top-scroll">
+                    <a href="#top"><i class="fa fa-circle-arrow-up scroll fa-4x"></i></a>
+                </div>-->
+                <hr>
+                <ul class="list-inline">
+                    <li>
+                        <i><a href="#contact">Terms & Conditions</a></i>
+                    </li>
+                    <li>
+                        <i>Privacy Statement</i>
+                    </li>
+                    <li>
+                        <i>Site Map</i>
+                    </li>
+
+                    <li>
+                        <i>Cookie Policy</i>
+                    </li>
+                </ul>
+                <p class="text-center">Bluecoat Software &copy; Copyright 2014</p>
+                <p><img src="~/Content/Image/powered-by-finplan-102x38-trans.jpg" /></p>
+
+
+
+            </div>
+        </div>
+    </footer>
+    <!-- /Footer -->
     <!-- /.container -->
     <!-- JavaScript -->
     @Scripts.Render("~/bundles/jquery")

@@ -17,7 +17,7 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
-            <li class="sidebar-brand"><a href="http://startbootstrap.com">Start Bootstrap</a>
+            <li class="sidebar-brand"><a href="http://bluecoatsoftware.com">Bluecoat Software</a>
             </li>
             <li><a href="#top">Home</a>
             </li>
@@ -30,7 +30,7 @@
             <li><a href="#contact">Contact</a>
             </li>
             <li>
-                <a href="@Url.Action("Login", "User")">Contact</a>
+                <a href="@Url.Action("Login", "User")">Shop</a>
             </li>
         </ul>
     </div>
@@ -72,49 +72,30 @@
             <div class="row">
                 <div class="col-xs-6 col-md-4 text-center">
                     <div class="service-item">
-                        <i class="service-icon fa fa-rocket"></i>
-                        <h4>Spacecraft Repair</h4>
-                        <p>Did your navigation system shut down in the middle of that asteroid field? We can repair any dings and scrapes to your spacecraft!</p>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-md-4 text-center">
-                    <div class="service-item">
-                        <i class="service-icon fa fa-magnet"></i>
-                        <h4>Problem Solving</h4>
-                        <p>Need to know how magnets work? Our problem solving solutions team can help you identify problems and conduct exploratory research.</p>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-md-4 text-center">
-                    <div class="service-item">
-                        <i class="service-icon fa fa-shield"></i>
-                        <h4>Why FinPlan</h4>
+                        <i><img src="~/Content/Image/whyfinplanimage.png" width="235" height="235" /></i>
+                        <h3>Why FinPlan</h3>
                         <p>Find out why FinPlan is the system you need to run your business.</p>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4 text-center">
+                    <div class="service-item">
+                        <i><img src="~/Content/Image/makedifferenceimage.png" /></i>
+                        <h3>Making a Difference</h3>
+                        <p>Our Software isn't the only thing that makes us stand out from the crowd.</p>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4 text-center">
+                    <div class="service-item">
+                        <i><img src="~/Content/Image/whobluecoaticon.png" /></i>
+                        <h3>Who are Bluecoat Software</h3>
+                        <p>One of the country's leading financial software developers</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- /Services -->
-    
-    <!-- Callout -->
-    <div class="callout" style="color:black !important">
-        <div class="vert-text">
-            <div style="width:auto">
-                @RenderBody()
-                @if (Request.IsAuthenticated)
-                {
-                    <strong>@Html.Encode(User.Identity.Name)</strong>
-                    @Html.ActionLink("Sign Out", "Log Out", "User")
-                }
-                else
-                {
-                    @Html.ActionLink("Register","Register","User")
-                    @Html.ActionLink("Sign In", "Login", "User")
-                }
-            </div>
-        </div>
-    </div>
-    <!-- /Callout -->
+   
 
     <!-- Portfolio -->
     <div id="portfolio" class="portfolio">
@@ -166,6 +147,34 @@
     </div>
     <!-- /Portfolio -->
 
+    <!-- Callout -->
+    <div class="callout" style="color:black !important">
+        <div class="vert-text">
+            <div style="width:auto">
+                @RenderBody()
+                @if (Request.IsAuthenticated)
+                {
+                    <strong>@Html.Encode(User.Identity.Name)</strong>
+                    @Html.ActionLink("Sign Out", "Log Out", "User")
+                }
+                else
+                {
+                    @Html.ActionLink("Register", "Register", "User")
+                    @Html.ActionLink("Sign In", "Login", "User")
+                }
+            </div>
+        </div>
+    </div>
+    <!-- /Callout -->
+
+   
+    <!-- Map -->
+    <div id="contact" class="map">
+        <iframe style="width:100%; height:100%;" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps/ms?hl=en&amp;gl=uk&amp;ie=UTF8&amp;oe=UTF8&amp;msa=0&amp;msid=213341012478731475218.0004d7a320379e8ff99a2&amp;t=m&amp;ll=51.234498,-0.342073&amp;spn=0,0&amp;output=embed"></iframe><br />
+       
+    </div>
+    <!-- /Map -->
+
     <!-- Call to Action -->
     <div class="call-to-action">
         <div class="container">
@@ -180,20 +189,10 @@
     </div>
     <!-- /Call to Action -->
 
-    <!-- Map -->
-    <div id="contact" class="map">
-        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps/ms?hl=en&amp;gl=uk&amp;ie=UTF8&amp;oe=UTF8&amp;msa=0&amp;msid=213341012478731475218.0004d7a320379e8ff99a2&amp;t=m&amp;ll=51.234498,-0.342073&amp;spn=0,0&amp;output=embed"></iframe><br /><small>View <a href="https://maps.google.co.uk/maps/ms?hl=en&amp;gl=uk&amp;ie=UTF8&amp;oe=UTF8&amp;msa=0&amp;msid=213341012478731475218.0004d7a320379e8ff99a2&amp;t=m&amp;ll=51.234498,-0.342073&amp;spn=0,0&amp;source=embed" style="color:#0000FF;text-align:left">Bluecoat Software</a> in a larger map</small>
-        <br />
-        <small>
-            <a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A"></a>
-        </small>
-        </iframe>
-    </div>
-    <!-- /Map -->
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
+
+    <footer style="padding: 15px !important">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 text-center">
                     <ul class="list-inline">
@@ -204,15 +203,33 @@
                         <li><i class="fa fa-dribbble fa-3x"></i>
                         </li>
                     </ul>
-                    <div class="top-scroll">
+                    <!-- <div class="top-scroll">
                         <a href="#top"><i class="fa fa-circle-arrow-up scroll fa-4x"></i></a>
-                    </div>
+                    </div>-->
                     <hr>
-                    <p>Bluecoat Software &copy; Copyright 2014</p>
-                </div>
+                    <ul class="list-inline">
+                        <li>
+                            <i><a href="#contact">Terms & Conditions</a></i>
+                        </li>
+                        <li>
+                            <i>Privacy Statement</i>
+                        </li>
+                        <li>
+                            <i>Site Map</i>
+                        </li>
+
+                        <li>
+                            <i>Cookie Policy</i>
+                        </li>
+                        </ul>
+                        <p class="text-center">Bluecoat Software &copy; Copyright 2014</p>
+                        <p><img src="~/Content/Image/powered-by-finplan-102x38-trans.jpg"/></p>
+                       
+
+
             </div>
         </div>
-    </footer>
+ </footer>
     <!-- /Footer -->
 
 
