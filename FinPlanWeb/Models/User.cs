@@ -25,7 +25,7 @@ namespace FinPlanWeb.Models
         [Display(Name = "Remember this computer")]
         public bool RememberMe { get; set; }
 
-        public string Role { get; set; }
+        
 
 
         /// This part checks if the user with password is existing within the database 
@@ -48,6 +48,7 @@ namespace FinPlanWeb.Models
             {
                 string _sql = @"SELECT [Username] FROM [dbo].[users] WHERE [Username] = @u AND [Password] = @p";
                 var cmd = new SqlCommand(_sql, connection);
+                
                 connection.Open();
                 cmd.Parameters
                         .Add(new SqlParameter("@u", SqlDbType.NVarChar))
@@ -55,9 +56,11 @@ namespace FinPlanWeb.Models
                 cmd.Parameters
                         .Add(new SqlParameter("@p", SqlDbType.NVarChar))
                         .Value = Helpers.SHA1.Encode(_password);
+
                 var reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
+                    
                     reader.Dispose();
                     cmd.Dispose();
                     return true;
@@ -70,9 +73,47 @@ namespace FinPlanWeb.Models
                 }
 
             }
+
+            }
+
+            public bool isAdmin(string _username, string _password)
+            {
+                using (var connection = new SqlConnection(getConnection()))
+                {
+                    string _sql = @"SELECT [isAdmin] FROM [dbo].[users] WHERE [Username] = @u AND [Password] = @p";
+                     var cmd = new SqlCommand(_sql, connection);
+
+                    connection.Open();
+                    cmd.Parameters
+                            .Add(new SqlParameter("@u", SqlDbType.NVarChar))
+                            .Value = _username;
+
+                    cmd.Parameters
+                       .Add(new SqlParameter("@p", SqlDbType.NVarChar))
+                       .Value = Helpers.SHA1.Encode(_password);
+
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+
+                        bool IsAdmin = Convert.ToBoolean(reader["IsAdmin"]);
+
+                        if (IsAdmin == true)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    } return false;
+            }
+
         }
 
     }
+
+
 
     /// <summary>
     /// Model for registration process
@@ -119,7 +160,7 @@ namespace FinPlanWeb.Models
                 cmd.CommandText = "INSERT INTO [dbo].[users](Username,Password,Email) VALUES (@Username, @Password, @Email)";
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@Username", Username);
-                cmd.Parameters.AddWithValue("@Password", Password);
+                cmd.Parameters.AddWithValue("@Password", Helpers.SHA1.Encode(Password));
                 cmd.Parameters.AddWithValue("@Email", Email);
                 if (con.State == ConnectionState.Closed)
                 {

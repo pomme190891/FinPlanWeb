@@ -60,6 +60,16 @@
         <div class="row">
             <div class="col-lg-12">
                 @RenderBody();
+                @if (Request.IsAuthenticated)
+                {
+                    <strong>@Html.Encode(User.Identity.Name)</strong>
+                    @Html.ActionLink("Sign Out", "Log Out", "User")
+                }
+                else
+                {
+                    @Html.ActionLink("Register", "Register", "User")
+                    @Html.ActionLink("Sign In", "Login", "User")
+                }
             </div>
         </div>
 

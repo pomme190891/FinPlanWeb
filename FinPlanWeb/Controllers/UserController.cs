@@ -40,8 +40,17 @@ namespace FinPlanWeb.Controllers
             {
                 if (user.isValid(user.Username, user.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(user.Username, user.RememberMe);
-                    return RedirectToAction("Index", "Home");
+                    if (user.isAdmin(user.Username, user.Password))
+                    {
+                        FormsAuthentication.SetAuthCookie(user.Username, user.RememberMe);
+                        return RedirectToAction("Index", "User");
+                    }
+                    else
+                    {
+                        FormsAuthentication.SetAuthCookie(user.Username, user.RememberMe);
+                        return RedirectToAction("Index", "User");
+                    }
+                    
                 }
                 else
                 {
