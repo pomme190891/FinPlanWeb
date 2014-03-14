@@ -75,8 +75,15 @@ namespace FinPlanWeb.Models
             }
 
             }
-
-            public bool isAdmin(string _username, string _password)
+        /// <summary>
+        /// Check that the user is an admin or not
+        /// </summary>
+        /// <param name="_username"></param>
+        /// <param name="_password"></param>
+        /// <returns></returns>
+        /// 
+            
+        public bool isAdmin(string _username, string _password)
             {
                 using (var connection = new SqlConnection(getConnection()))
                 {
@@ -127,7 +134,7 @@ namespace FinPlanWeb.Models
         [Required]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email Address")]
-        [RegularExpression(@"^(?("")("".+?""@)|(([0-9a-zA-Z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-zA-Z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$", ErrorMessage = "Invalid Email")]
+        [RegularExpression(@"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email have to be in YourEmail@Domain.com.")]
         public string EmailAddress { get; set; }
 
         [Required(ErrorMessage = "The {0} field is required!")]

@@ -28,6 +28,17 @@ namespace FinPlanWeb.Controllers
             return View();
         }
 
+
+        public ActionResult CustomerPage()
+        {
+            return View();
+        }
+
+        public ActionResult AdminPage()
+        {
+            return View();
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -43,18 +54,18 @@ namespace FinPlanWeb.Controllers
                     if (user.isAdmin(user.Username, user.Password))
                     {
                         FormsAuthentication.SetAuthCookie(user.Username, user.RememberMe);
-                        return RedirectToAction("Index", "User");
+                        return RedirectToAction("AdminPage", "User");
                     }
                     else
                     {
                         FormsAuthentication.SetAuthCookie(user.Username, user.RememberMe);
-                        return RedirectToAction("Index", "User");
+                        return RedirectToAction("CustomerPage", "User");
                     }
                     
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Login data is incorrect!");
+                    ModelState.AddModelError("General", "Password is incorrect!");
                 }
             }
             return View(user);
@@ -92,6 +103,7 @@ namespace FinPlanWeb.Controllers
             else
             {
                 ModelState.AddModelError("", "Missing some field(s)");
+
             }
             
             
