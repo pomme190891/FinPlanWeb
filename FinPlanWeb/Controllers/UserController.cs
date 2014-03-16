@@ -9,6 +9,11 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 using WebMatrix.WebData;
+using FinPlanWeb.Database;
+using FinPlanWeb.Models;
+
+
+
 
 namespace FinPlanWeb.Controllers
 {
@@ -45,13 +50,13 @@ namespace FinPlanWeb.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Login(Models.User user)
+        public ActionResult Login(User user)
         {
             if (ModelState.IsValid)
             {
-                if (user.isValid(user.Username, user.Password))
+                if (UserManagement.isValid(user.Username, user.Password))
                 {
-                    if (user.isAdmin(user.Username, user.Password))
+                    if (UserManagement.isAdmin(user.Username, user.Password))
                     {
                         FormsAuthentication.SetAuthCookie(user.Username, user.RememberMe);
                         return RedirectToAction("AdminPage", "User");
@@ -86,18 +91,20 @@ namespace FinPlanWeb.Controllers
         public ActionResult Register()
         {
             return View();
-
         }
 
         [HttpPost]
 
-        public ActionResult Register(Models.RegisterModel register)
+        public ActionResult Registration(Register register)
         {
             if (ModelState.IsValid)
             {
                 if (register.Password == register.ConfirmPassword)
                 {
-                    register.ExecuteInsert(register.Username, register.Password, register.EmailAddress);
+                    UserManagement.ExecuteInsert(register.Username, register.Password, register.EmailAddress);
+                    register.Username = "";
+                    register.EmailAddress = "";
+                    ModelState.Clear();
                 }
             }
             else
@@ -105,9 +112,9 @@ namespace FinPlanWeb.Controllers
                 ModelState.AddModelError("", "Missing some field(s)");
 
             }
-            
-            
-            return View(register);
+
+
+            return View("Register", register);
         }
     }
  }
