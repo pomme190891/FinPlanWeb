@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net;
+
 
 namespace FinPlanWeb.Database
 {
@@ -17,6 +19,23 @@ namespace FinPlanWeb.Database
             return System.Configuration.ConfigurationManager.ConnectionStrings["standard"].ConnectionString;
         }
 
+        private static string GetIP()
+        {
+            string strHostName = "";
+            strHostName = System.Net.Dns.GetHostName();
+
+            IPHostEntry ipEntry = System.Net.Dns.GetHostEntry(strHostName);
+
+            string ipaddress = Convert.ToString(ipEntry.AddressList[2]);
+
+            return ipaddress.ToString();
+
+        }
+
+
+
+
+
         public static bool isValid(string _username, string _password)
 
         ///Establishing a connection db
@@ -27,15 +46,35 @@ namespace FinPlanWeb.Database
             using (var connection = new SqlConnection(getConnection()))
             {
                 string _sql = @"SELECT [Username] FROM [dbo].[users] WHERE [Username] = @u AND [Password] = @p";
+                string _sql2 = @"UPDATE Users SET LastLogin = GETDATE() WHERE [Username] = @u AND [Password] =@p";
+                string _sql3 = @"UPDATE [dbo].[users] SET iplog = @ip WHERE [Username] = @u AND [Password] =@p";
+
+
                 var cmd = new SqlCommand(_sql, connection);
+                var cmd2 = new SqlCommand(_sql2, connection);
+                var cmd3 = new SqlCommand(_sql3, connection);
 
                 connection.Open();
                 cmd.Parameters
-                        .Add(new SqlParameter("@u", SqlDbType.NVarChar))
-                        .Value = _username;
+                          .Add(new SqlParameter("@u", SqlDbType.NVarChar))
+                          .Value = _username;
                 cmd.Parameters
-                        .Add(new SqlParameter("@p", SqlDbType.NVarChar))
-                        .Value = Helpers.SHA1.Encode(_password);
+                          .Add(new SqlParameter("@p", SqlDbType.NVarChar))
+                          .Value = Helpers.SHA1.Encode(_password);
+                cmd2.Parameters
+                          .Add(new SqlParameter("@u", SqlDbType.NVarChar))
+                          .Value = _username;
+                cmd2.Parameters
+                          .Add(new SqlParameter("@p", SqlDbType.NVarChar))
+                          .Value = Helpers.SHA1.Encode(_password);
+                cmd3.Parameters
+                          .Add(new SqlParameter("@u", SqlDbType.NVarChar))
+                          .Value = _username;
+                cmd3.Parameters
+                          .Add(new SqlParameter("@p", SqlDbType.NVarChar))
+                          .Value = Helpers.SHA1.Encode(_password);
+                cmd3.Parameters.AddWithValue("@ip", GetIP());
+
 
                 var reader = cmd.ExecuteReader();
                 if (reader.HasRows)
@@ -43,6 +82,8 @@ namespace FinPlanWeb.Database
 
                     reader.Dispose();
                     cmd.Dispose();
+                    cmd2.ExecuteNonQuery();
+                    cmd3.ExecuteNonQuery();
                     return true;
                 }
                 else
