@@ -49,9 +49,7 @@ namespace FinPlanWeb.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        [RequireHttps]
         [HttpPost]
-        
         public ActionResult Login(User user)
         {
             if (ModelState.IsValid)
@@ -85,6 +83,7 @@ namespace FinPlanWeb.Controllers
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
+            WebSecurity.Logout();
             return RedirectToAction("Index", "Home");
         }
 
